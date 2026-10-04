@@ -1,0 +1,110 @@
+# Activar el uso de Scripts # 
+
+Cambiar la ejecutcion de scripts en powershell para poder ejecutar el node.js correctamente: 
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned (presionar Y si es ingles, S si es español)
+Regresarlo a como estaba antes (política de windows): Set-ExecutionPolicy -Scope CurrentUser Undefined
+Restrigirlo directamente: Set-ExecutionPolicy -Scope CurrentUser Restricted
+
+# Crear el etorno virtual #
+
+Manejo dos (venv de python y virtualenv como herramienta externa): para el venv normal no hay necesidad
+de instalar algo adicional porque ya viene con python ese entorno. A diferencia de virtualen que es otra
+herramienta externa que sirve para lo mismo pero si toca instalar.
+pasos para instalar virtualenv - ubicarse en cd backend abrir la terminal y colocar este comando
+"pip install virtualenv" existen varias opciones si no reconoce esa como:
+"python -m pip install virtualenv" o "py -m pip install virtualenv"
+
+ACTIVACION: para el venv es: cd backend y "python -m venv venv" o "py -m venv venv"
+para el virtualenv es: cd backend y virtualenv venv o "python -m virtualenv venv" cuando no esta en el path
+si no funciona con ese entonces seria "python -m virtualenv venv"
+
+INICIALIZACION: para iniciar el venv de python solo hace falta estar en cd backend y colocar este comando
+".\venv\Scripts\Activate.ps1"
+para iniciar el virtualenv es igual a la venv es decir: ".\venv\Scripts\Activate.ps1"
+
+PROBLEMAS CON EL PATH: para ingresar win + s escribir "variables de entorno" y ingresar, luego abajo sale
+nuevamente la opcion "variables de entorno..." se ingresa ahi, luego en la parte variables de usuario
+para ... busca la opcion path y se ingresa a la opcion que dice editar, luego en el menu aparecen las
+rutas se le da donde dice "nuevo" y se ingresa la ruta exacta de las variables que aun no estan, en
+este caso me toco agregar "C:\Users\Danie\AppData\Local\Programs\Python\Python313\Scripts" para que
+pudiera ejecutar la linea "virtualenv venv" y que se creara el entorno porque no lo estaba reconociendo
+el path no sabia donde estaba, pero no es necesario, puedes directamente usar el comando "virtualenv venv"
+
+PROBLEMAS DE COMPACTO EN CARPETAS: ctrl + , y luego escribir "compact folders y desmarcar la opcion que
+dice "explorer: compact folders"
+
+ELIMINAR CARPETAS (en este caso venv(virtualenv)): como esta backend el primer paso es "cd backend" y
+luego "Remove-Item -Recurse -Force .\venv" (todo este proceso teniendo el venv desactivado: deactivate)
+
+NOTA / ELIMINAR E INSTALAR LIBRERIAS (REQUIREMENTS.TXT) /: es mejor instalar las librerias solamente 
+dentro del python en el entorno virtual y dejar el python global libre de cualquier dependencia de libreria.
+"dir C:\Users\Danie\AppData\Local\Programs\Python\Python313\Scripts" para ver si python tiene descargada
+alguna libreria (funciona en esta pc).
+para ELIMINAR seria algo como "pip unistall fastapi" si quieres varios al tiempo " puede ser algo como
+"pip uninstall fastapi psycopg python-dotenv" y para revisar la lista de lo que tu python tiene
+descargado es "pip list"
+para GUARDAR toda la informacion sobre las librearias que se utilizan en el entorno se utilizaria 
+"pip freeze > requirements.txt" estando dentro de backend y con el venv activao
+para INSTALAR solo se debe colocar "pip install -r requirements.txt" dentro del backend con el venv activo 
+(sirve por si eliminas el venv del backend pero aun el archivo requirements esta guardando todos los
+datos que en algun momento el anterior venv utilizo y tu quieres reutilizarlo en lugar de descargar
+todo de nuevo)
+
+# activar el backend # 
+
+se inicia la terminal; "cd backend" para ubicarse en esa carpeta, luego ".\venv\Scripts\Activate.ps1"
+para activar el entorno virtual, luego "python -m fastapi dev main.py" o "fastapi dev main.py si ya
+se tiene la ruta de scripts en el PATH (ambos funcionan con el fastapi[standard]), si falla esa se 
+puede llamar a "python -m uvicorn main:app --reload" o aveces "python -m uvicorn main:app" ambos 
+funcionan con la instalacion basica de fastapi ("pip install fastapi"), para detenerlo es "ctrl + c"
+
+# activar el frontend #
+
+se inicia la terminal; "cd frontend" para ubicarse en esa carpeta, luego "npm run dev" para iniciar
+y para detenerlo "ctrl + c". si se quiere activar y iniciar la ventana "npm run dev -- --open" deja
+la ventana iniciada en el navegador una ves el servidor este activo.
+
+# instalar fastapi # 
+
+tener el el entorno virtual activo (venv) ".\venv\Scripts\Activate.ps1" y luego dentro de esa misma
+terminal "pip install "fastapi[standard]" o tambien las alternativas "py -m pip install "fastapi[standard]"
+o "python -m pip install "fastapi[standard]"
+
+# instalar sveltekit #
+
+ubicarse en la terminal y estar en la carpeta principal de todo el proyecto, luego "npx sv create frontend"
+teniendo ya de antes la carpeta "frontend" creada, para que toda la liberia de sveltekit se descargue
+luego apareceran unas preguntas...
+
+# instalar controlador de postgrestSQL #
+
+ubicarse en la terminal dentro del backend "cd backend", tener activado el venv si no esta activo entonces
+.\venv\Scripts\Activate.ps1 seguido colocar pip install "psycopg[binary]" python-dotenv para instalarlo
+psycopg → permite que Python se comunique con PostgreSQL.
+python-dotenv → nos permitirá guardar la información de conexión en un archivo .env
+CREAR EL .env DENTRO DEL backend para guardar los datos sensibles
+CREAR EL .gitignore DENTRO DEL backend para decirle a git no guardes o subas estos archivos al repositorio
+
+PROBLEMAS CON "psycopg" 
+pasos: ctrl shit + p y "Python: Select Interpreter" luego selecionar "escriba la ruta de acceso interprete
+y realizar esto; software-universidad
+→ backend
+→ venv
+→ Scripts
+→ python.exe
+
+PROBLEMA CON ACTIVACION AUTOMATICA DEL ENTORNO VIRTUAL (VENV)
+pasos: ctrl + , y luego en el buscador pegar "activate environment terminal" y desactivar la casilla
+que pone "python terminal acctivate environment"
+
+# COMANDOS EXTRA #
+
+"cls": Limpia la terminal 
+"pip list": ver los paquetes/librerias que tiene instalado la version de python donde te ubicas
+"deactivate": desactivar el venv 
+
+# DATOS EXTRA #
+
+- "TLS" para la database es importante porque es el protocolo de cifrado de datos, antes era "ssl" pero
+actualmente el suceros es TLS algunos lenguajes lo siguen usando por compatibilidad historica pero aunque
+ssl en realidad esta llevando un proceso con tls
