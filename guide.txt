@@ -97,6 +97,25 @@ PROBLEMA CON ACTIVACION AUTOMATICA DEL ENTORNO VIRTUAL (VENV)
 pasos: ctrl + , y luego en el buscador pegar "activate environment terminal" y desactivar la casilla
 que pone "python terminal acctivate environment"
 
+# AGREGAR PROYECTO A GIT Y GITHUB - COMMITS"
+
+primero verificamos si git esta inicializado en la carpeta "git status" si marca error entonces se
+inicia de 0 "git init" ya debe existir el archivo .gitignore para no agregar esa informacion, luego
+"git add ." y si sale alguna advertencia de codigo LF (mac/linux) colocar este codigo "git config --global core.autocrlf input"
+para decirle a git que no cambie el formato LF por el CRLF(windows) que trata del salto de lineas, luego 
+"git commit -m "Primer commit del proyecto"" para guardar el estado actual, luego se ejecuta esta linea "git branch -M main"
+para que force a la ramma a llamarse main que es lo normal actualmente (antes llamada master) luego conecta el repositorio Local
+con el repositorio en el servidor de github con esta linea "git remote add origin https://github.com/tu-usuario/tu-repositorio.git"
+obviamente reemplazando por los datos correctos, luego esta linea "git push -u origin main" para hacer el push (subir) los commits
+hechos localmente al repositorio en github  
+
+# ELIMINAR COMMITS Y DEVOLVERSE EN GITHUB #
+
+"git log --oneline" para ver la lista de commits hasta ahora, luego se utiliza "git reset --hard <ID del commit al que quieres regresar>"
+si los commits no se han subido a github con esa ya habra quedado listo todo, pero si ya estan en github, se utiliza este codigo
+"git push origin main --force-with-lease" dependiendo del nombre de tu rama, si es main es ese mismo codigo, si es dev es
+"git push origin dev --force-with-lease" para hacer esta eliminacion primero se debe hacer el reset al commit que quieres regresar.
+
 # COMANDOS EXTRA #
 
 "cls": Limpia la terminal 
