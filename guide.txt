@@ -109,12 +109,24 @@ con el repositorio en el servidor de github con esta linea "git remote add origi
 obviamente reemplazando por los datos correctos, luego esta linea "git push -u origin main" para hacer el push (subir) los commits
 hechos localmente al repositorio en github  
 
+SUBIR: primero revisas el estado: git status, si todo esta correcto utiliza este comando 
+"git add ."
+"git commit -m "SE PONE EL MSJ DEL COMMIT""
+"git push origin main" y con esos codigos quedan subidos los nuevos cambios al github con el commit 
+
 # ELIMINAR COMMITS Y DEVOLVERSE EN GITHUB #
 
 "git log --oneline" para ver la lista de commits hasta ahora, luego se utiliza "git reset --hard <ID del commit al que quieres regresar>"
 si los commits no se han subido a github con esa ya habra quedado listo todo, pero si ya estan en github, se utiliza este codigo
 "git push origin main --force-with-lease" dependiendo del nombre de tu rama, si es main es ese mismo codigo, si es dev es
 "git push origin dev --force-with-lease" para hacer esta eliminacion primero se debe hacer el reset al commit que quieres regresar.
+
+# TRANSFERIR BASE DE DATOS DE UNA CUENTA A OTRA #
+
+primero se debe descargar en mi caso postgrestSQL, luego utilizamos los comandos "pg_dump" y "psql" (si da error se tienen que agregar al path) 
+primero usamos "cd ~\Desktop" para ubicarnos en el escritorio y quedar mas comodos con la ubicacion de exportacion del archivo, luego usamos 
+esta linea "pg_dump "pegas la clave de conexion de la cuenta de neon que quieras exportar" -f respaldo_completo.sql" paso siguiente usamos esta
+"psql "pegas la clave de la cuenta a la quieres importar la basde de datos" -f respaldo_completo.sql" y listo deberia quedar todo creado
 
 # COMANDOS EXTRA #
 
