@@ -134,6 +134,28 @@ class UsuarioRepository:
 
             raise Exception(f"Error al eliminar el usuario: {e}")
       
+    def obtener_por_correo(self, correo: str):
+        try:
+            conn = self.db.get_connection()
+            cursor = conn.cursor()
+
+            cursor.execute(
+                 """
+                 SELECT *
+                 FROM usuarios
+                   WHERE correo = %s
+                   """,
+                   (correo,)
+                   )
+            usuario = cursor.fetchone()
+            cursor.close()
+            conn.close()
+
+            return usuario
+        
+        except Exception as e:
+            raise Exception(f"Error al obtener el usuario por correo: {e}")
+
     def actualizar(self, id_usuario: int, usuario: Usuario):
         try:
             conn = self.db.get_connection()

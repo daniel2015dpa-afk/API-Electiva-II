@@ -65,11 +65,12 @@ class EvaluacionesFinalesRepository:
                 fortalezas,
                 aspectos_mejora,
                 observaciones,
-                recomendaciones
+                recomendaciones,
+                estado
             )
             VALUES (
                 %s, %s, %s, %s, %s,
-                %s, %s, %s, %s, %s, %s
+                %s, %s, %s, %s, %s, %s, %s
             )
             RETURNING id_evaluacion;
             """
@@ -86,7 +87,8 @@ class EvaluacionesFinalesRepository:
                     evaluaciones_finales.fortalezas,
                     evaluaciones_finales.aspectos_mejora,
                     evaluaciones_finales.observaciones,
-                    evaluaciones_finales.recomendaciones
+                    evaluaciones_finales.recomendaciones,
+                    evaluaciones_finales.estado
                     )
                     )
             nuevo_id = cursor.fetchone()["id_evaluacion"]
@@ -147,6 +149,7 @@ class EvaluacionesFinalesRepository:
                 aspectos_mejora = %s,
                 observaciones = %s,
                 recomendaciones = %s,
+                estado = %s,
                 fecha_actualizacion = CURRENT_TIMESTAMP
             WHERE id_evaluacion = %s
             RETURNING id_evaluacion;
@@ -166,6 +169,7 @@ class EvaluacionesFinalesRepository:
                     evaluaciones_finales.aspectos_mejora,
                     evaluaciones_finales.observaciones,
                     evaluaciones_finales.recomendaciones,
+                    evaluaciones_finales.estado,
                     id_evaluacion
                     )
                     )

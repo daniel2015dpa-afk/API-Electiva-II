@@ -48,15 +48,16 @@ class RolesRepository:
              query = """
 
              INSERT INTO roles
-             (nombre, descripcion)
-               VALUES (%s, %s)
+             (nombre, descripcion, estado)
+               VALUES (%s, %s, %s)
                  RETURNING id_rol;
                  """
              cursor.execute(
                   query,
                   (
                         roles.nombre,
-                        roles.descripcion
+                        roles.descripcion,
+                        roles.estado
                         )
                         )
              nuevo_id = cursor.fetchone()["id_rol"]
@@ -108,7 +109,8 @@ class RolesRepository:
              query = """
              UPDATE roles
              SET nombre = %s,
-               descripcion = %s
+               descripcion = %s,
+               estado = %s
                WHERE id_rol = %s
                RETURNING id_rol;
                """
@@ -117,6 +119,7 @@ class RolesRepository:
                   (
                        roles.nombre,
                        roles.descripcion,
+                       roles.estado,
                        id_rol
                        )
                        )

@@ -16,3 +16,4 @@ class EvaluacionesFinales(BaseModel):
     aspectos_mejora: str
     observaciones: str
     recomendaciones: str
+    estado: str

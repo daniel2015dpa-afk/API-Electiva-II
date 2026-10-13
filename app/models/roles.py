@@ -6,3 +6,5 @@ class Roles(BaseModel):
     id_rol: Optional[int] = None
     nombre: str
     descripcion: str
+    estado: bool
+

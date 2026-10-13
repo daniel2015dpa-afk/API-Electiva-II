@@ -60,16 +60,18 @@ class ModulosRepository:
             INSERT INTO modulos
             (
                 nombre,
-                descripcion
+                descripcion,
+                estado
             )
-            VALUES (%s, %s)
+            VALUES (%s, %s, %s)
             RETURNING id_modulo;
             """
             cursor.execute(
                 query,
                 (
                     modulo.nombre,
-                    modulo.descripcion
+                    modulo.descripcion,
+                    modulo.estado
                     )
                     )
 
@@ -120,7 +122,8 @@ class ModulosRepository:
             UPDATE modulos
             SET
                 nombre = %s,
-                descripcion = %s
+                descripcion = %s,
+                estado = %s
             WHERE id_modulo = %s
             RETURNING id_modulo;
             """
@@ -130,6 +133,7 @@ class ModulosRepository:
                 (
                     modulo.nombre,
                     modulo.descripcion,
+                    modulo.estado,
                     id_modulo
                     )
                     )

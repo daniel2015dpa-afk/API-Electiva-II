@@ -49,8 +49,8 @@ class Modulos_x_rolesRepository:
 
             query = """
             INSERT INTO modulos_x_roles
-            (id_modulo, id_rol, puede_ver, puede_crear, puede_actualizar, puede_eliminar)
-            VALUES (%s, %s, %s, %s, %s, %s)
+            (id_modulo, id_rol, puede_ver, puede_crear, puede_actualizar, puede_eliminar, estado)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
             RETURNING id_modulo_rol;
             """
 
@@ -62,7 +62,8 @@ class Modulos_x_rolesRepository:
                     modulos_x_roles.puede_ver,
                     modulos_x_roles.puede_crear,
                     modulos_x_roles.puede_actualizar,
-                    modulos_x_roles.puede_eliminar
+                    modulos_x_roles.puede_eliminar,
+                    modulos_x_roles.estado
                     ) 
                     )
             nuevo_id = cursor.fetchone()["id_modulo_rol"]
@@ -114,7 +115,8 @@ class Modulos_x_rolesRepository:
                     puede_ver = %s,
                     puede_crear = %s,
                     puede_actualizar = %s,
-                    puede_eliminar = %s
+                    puede_eliminar = %s,
+                    estado = %s
                     WHERE id_modulo_rol = %s
                       RETURNING id_modulo_rol;
                         """
@@ -127,6 +129,7 @@ class Modulos_x_rolesRepository:
                     modulos_x_roles.puede_crear,
                     modulos_x_roles.puede_actualizar,
                     modulos_x_roles.puede_eliminar,
+                    modulos_x_roles.estado,
                     id_modulo_rol
                     )
                     )

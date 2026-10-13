@@ -10,3 +10,4 @@ class Modulos_x_roles(BaseModel):
     puede_crear: bool
     puede_actualizar: bool
     puede_eliminar: bool
+    estado: bool
